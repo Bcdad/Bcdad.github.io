@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #2b768f;
+            flex-direction: column;
+        }
+
+        .container {
+            position: relative;
+            height: 400px;
+            display: flex;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            justify-content: center;
+
+        }
+
+        #cloud {
+            position: relative;
+            width: 320px;
+            height: 100px;
+            top: 50px;
+            background-color: #fff;
+            border-radius: 50px;
+            filter: drop-shadow(0 0 35px #fff);
+        }
+
+        #cloud::before {
+            content: '';
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background-color: #fff;
+            top: -50px;
+            left: 40px;
+            box-shadow: 90px 0 0 30px #fff;
+
+        }
+
+        .text {
+            position: absolute;
+            height: 20px;
+            top: 40px;
+            left: 100px;
+            text-shadow: 0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 15px #fff;
+            line-height: 20px;
+            color: #fff;
+            text-transform: uppercase;
+            /* transform-origin: bottom; */
+            animation: animate 2s linear forwards;
+        }
+
+        /* 这是动画 */
+        @keyframes animate {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            70% {
+                transform: translateY(290px) scale(1);
+            }
+
+            100% {
+                transform: translateY(290px) scale(0);
+            }
+        }
+
+        .bottom {
+            position: relative;
+            top: 100px;
+            margin: 0 auto;
+            width: 100px;
+            height: 30px;
+            display: block;
+            border-radius: 15px;
+            overflow: hidden;
+            text-decoration: none;
+            text-align: center;
+            line-height: 30px;
+
+
+        }
+
+        .bottom::after {
+            content: '';
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            background-color: #fff;
+            top: -40px;
+            left: -20px;
+            background-image: linear-gradient(to right, #5dd526, #3c5bc1, #c718c4);
+            z-index: -1;
+            transition: all 200ms ease;
+        }
+
+        .bottom:hover::after {
+            transform: rotate(100deg);
+        }
+
+        .bottom:hover {
+            width: 120px;
+            height: 36px;
+            border-radius: 18px;
+            box-shadow: 10px -10px 10px 0px #313131;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="cloud">
+            <div class="text">2</div>
+        </div>
+    </div>
+    <div><a href="#" class="bottom">下雨了耶</a></div>
+
+    <script>
+        var button = document.getElementsByClassName("bottom")[0]
+        var flag = 0
+        var intervalId
+        button.onclick = () => {
+            if (flag === 0) {
+                intervalId = setInterval(function () { rain() }, 20)
+                flag = 1
+                console.log("ok");
+            } else {
+                clearInterval(intervalId)
+                flag = 0
+            }
+        }
+        function randomText() {
+            let a = ['I', "love", 'you']
+            let letter = a[Math.floor(a.length * Math.random())]
+            return letter
+
+        }
+        function rain() {
+            let cloud = document.getElementById("cloud")
+            let e = document.createElement("div")
+            let rotate = document.createElement("div")
+            let size = Math.random() * 1.5 + 0.5
+            let left = Math.random() * 300
+            let duration = Math.random() * 1
+            let deg = Math.random() * 60 - 30
+            cloud.appendChild(e)
+            rotate.style.rotate = deg + "deg"
+            rotate.innerText = randomText()
+            e.appendChild(rotate)
+            e.classList.add('text')
+            e.style.left = left + 'px'
+            e.style.fontSize = size + 'em'
+            e.style.animationDuration = 1 + duration + 's'
+            setTimeout(function () { cloud.removeChild(e) }, 2000)
+        }
+    </script>
+
+
+</body>
+
+</html>
